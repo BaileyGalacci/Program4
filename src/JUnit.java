@@ -13,16 +13,49 @@ import java.util.Arrays;
  */
 public final class JUnit {
    
-    static void testGetMinEmptyArray(int[] array) {
-        //int array[] = {};
+    public static Change test;
+    
+    public static void testEmptyArray() {
+        int array[] = {};
         try{
         if(array.length == 0) {
-            throw new IllegalArgumentException("Array of size 0 is not allowed");
+            throw new IllegalArgumentException("Array of size 0 is not allowed");            
         }
         
         } catch(IllegalArgumentException e){
             System.out.println("Array of size 0 is not allowed\n");
         }
+    }
+    
+    public void initialize(int[] coinArray, int change) {
+        test = new Change(coinArray, change);
+    }
+    
+    public static void testCase1() {
+        int coinValues[] = {1, 5, 10, 25};
+        int change = 45;
+        
+        JUnit testUnit = new JUnit();
+        
+        testUnit.initialize(coinValues, change);
+    }
+    
+    public static void testCase2() {
+        int coinValues[] = {1, 5, 10, 25};
+        int change = 20;
+        
+        JUnit testUnit = new JUnit();
+        
+        testUnit.initialize(coinValues, change);
+    }
+    
+    public static void testCase3() {
+        int coinValues[] = {1, 5, 10, 21, 25};
+        int change = 63;
+        
+        JUnit testUnit = new JUnit();
+        
+        testUnit.initialize(coinValues, change);
     }
     
     
@@ -32,14 +65,13 @@ public final class JUnit {
         int[] coinsUsed;
             
         public Change(int[] coinArray, int change){
-            int[] minCoins = new int[change+1]; 
-            int[] coinsUsed = new int[change+1];
+            minCoins = new int[change+1]; 
+            coinsUsed = new int[change+1];
             
-            testGetMinEmptyArray(coinArray);
             dpMakeChange(coinArray, change);
         }
         
-        public int[] dpMakeChange(int[] coinArray, int change){
+        public void dpMakeChange(int[] coinArray, int change){
             
             
             Arrays.fill(minCoins, 0);
@@ -67,9 +99,20 @@ public final class JUnit {
                 coinsUsed[i] = newCoin;     // 
             }
             
+            printCoins(coinsUsed, change);
             
-            int[] a = new int[1];
-            return a;
+            return;
+        }
+        
+        public void printCoins(int[] coinsUsed, int change){
+            int coin = change;
+            int thisCoin = 0;
+            
+            while(coin > 0){
+                thisCoin = coinsUsed[coin];
+                System.out.printf("%d, ", thisCoin);
+                coin = coin - thisCoin;
+            }
         }
     
     }
